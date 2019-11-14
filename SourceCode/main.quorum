@@ -1,0 +1,202 @@
+use Libraries.Game.Game
+use Libraries.Game.Graphics.Drawable
+use Libraries.Game.InputMonitor
+use Libraries.Interface.Events.KeyboardEvent
+use Libraries.Interface.Events.KeyboardListener
+use Libraries.Interface.Events.CollisionListener2D
+use Libraries.Interface.Events.CollisionEvent2D
+use Libraries.Compute.Vector2
+use Libraries.Game.Graphics.Color
+
+
+class Main is Game, CollisionListener2D
+InputMonitor monitor
+KeyboardEvent keys
+Drawable Block
+Drawable Platform1
+Drawable Win
+Drawable Platform2
+Drawable Platform3
+Drawable Platform4
+Drawable Platform5
+Drawable Platform6
+Drawable Platform7
+Drawable Platform8
+Drawable Platform9
+Drawable Platformx
+Vector2 LinearVelocity
+Color Red
+Color Blue
+
+number currentx = Block:GetGlobalX()
+number currenty = Block:GetGlobalY()
+number speed = 1
+
+    action Main
+        SetScreenSize(1370,800)
+        StartGame()
+    end
+
+    action CreateGame
+        EnablePhysics2D(true)
+        number accelarationx = 0
+        number accelarationy = -400
+        Vector2 gravity
+        gravity:Set(accelarationx,accelarationy)
+        SetGravity2D(gravity)
+        Blue=Blue:Blue()
+        Red=Red:Red()
+
+        Block:SetName("me")
+        Block:SetCollidable(true)
+        Block:SetPosition(680,660)
+        Block:LoadFilledRectangle(60,60)
+        Block:EnablePhysics(true)
+        Block:SetResponsive()
+
+        Platform1:SetName("Platform1")
+        Platform1:SetCollidable(true)
+        Platform1:SetPosition(620,640)
+        Platform1:LoadFilledRectangle(180,20)
+        Platform1:EnablePhysics(true)
+        Platform1:SetUnmovable()
+
+        Platform2:SetName("Platform2")
+        Platform2:SetCollidable(true)
+        Platform2:SetPosition(850,560)
+        Platform2:LoadFilledRectangle(130,20,Blue)
+        Platform2:EnablePhysics(true)
+        Platform2:SetUnmovable()
+
+        Platform3:SetName("Platform3")
+        Platform3:SetCollidable(true)
+        Platform3:SetPosition(450,560)
+        Platform3:LoadFilledRectangle(130,20,Red)
+        Platform3:EnablePhysics(true)
+        Platform3:SetUnmovable()
+
+        Platform4:SetName("Platform4")
+        Platform4:SetCollidable(true)
+        Platform4:SetPosition(1080,470)
+        Platform4:LoadFilledRectangle(130,20,Blue)
+        Platform4:EnablePhysics(true)
+        Platform4:SetUnmovable()
+
+        Platform5:SetName("Platform5")
+        Platform5:SetCollidable(true)
+        Platform5:SetPosition(1250,365)
+        Platform5:LoadFilledRectangle(130,20,Red)
+        Platform5:EnablePhysics(true)
+        Platform5:SetUnmovable()
+
+        Platform6:SetName("Platform6")
+        Platform6:SetCollidable(true)
+        Platform6:SetPosition(1100,230)
+        Platform6:LoadFilledRectangle(130,20,Blue)
+        Platform6:EnablePhysics(true)
+        Platform6:SetUnmovable()
+
+        Platform7:SetName("Platform7")
+        Platform7:SetCollidable(true)
+        Platform7:SetPosition(320,450)
+        Platform7:LoadFilledRectangle(130,20)
+        Platform7:EnablePhysics(true)
+        Platform7:SetUnmovable()
+
+        Platform8:SetName("Platform8")
+        Platform8:SetCollidable(true)
+        Platform8:SetPosition(200,330)
+        Platform8:LoadFilledRectangle(130,20,Blue)
+        Platform8:EnablePhysics(true)
+        Platform8:SetUnmovable()
+
+        Platform9:SetName("Platform9")
+        Platform9:SetCollidable(true)
+        Platform9:SetPosition(380,330)
+        Platform9:LoadFilledRectangle(130,20,Red)
+        Platform9:EnablePhysics(true)
+        Platform9:SetUnmovable()
+
+        Win:SetName("Win")
+        Win:SetCollidable(true)
+        Win:SetPosition(0,0)
+        Win:LoadFilledRectangle(1370,70)
+        Win:EnablePhysics(true)
+
+        Add(Block)
+        Add(Platform1)
+        Add(Platform2)
+        Add(Platform3)
+        Add(Platform4)
+        Add(Platform5)
+        Add(Platform6)
+        Add(Platform7)
+        Add(Platform8)
+        Add(Platform9)
+        Add(Win)
+        AddCollisionListener(me)
+    end
+
+    action BeginCollision(CollisionEvent2D event)
+        Drawable itemA = cast(Drawable, event:GetItemA())
+        Drawable itemB = cast(Drawable, event:GetItemB())
+            if (itemA:GetName() = "me" and itemB:GetName() = "Platform2")
+                Vector2 linearVelocity
+                linearVelocity:Set(120,0)
+                Block:SetLinearVelocity(linearVelocity)
+            elseif (itemA:GetName() = "me" and itemB:GetName() = "Platform3")
+                Vector2 linearVelocity
+                linearVelocity:Set(-120,0)
+                Block:SetLinearVelocity(linearVelocity)
+            elseif (itemA:GetName() = "me" and itemB:GetName() = "Win")
+                Exit()
+            elseif (itemA:GetName() = "me" and itemB:GetName() = "Platform4")
+                Vector2 linearVelocity
+                linearVelocity:Set(120,0)
+                Block:SetLinearVelocity(linearVelocity)
+            elseif (itemA:GetName() = "me" and itemB:GetName() = "Platform5")
+                Vector2 linearVelocity
+                linearVelocity:Set(-120,0)
+                Block:SetLinearVelocity(linearVelocity)
+            elseif (itemA:GetName() = "me" and itemB:GetName() = "Platform6")
+                Vector2 linearVelocity
+                linearVelocity:Set(300,0)
+                Block:SetLinearVelocity(linearVelocity)
+            elseif (itemA:GetName() = "me" and itemB:GetName() = "Platform7")
+                Vector2 linearVelocity
+                linearVelocity:Set(0,0)
+                Block:SetLinearVelocity(linearVelocity)
+            elseif (itemA:GetName() = "me" and itemB:GetName() = "Platform8")
+                Vector2 linearVelocity
+                linearVelocity:Set(120,0)
+                Block:SetLinearVelocity(linearVelocity)
+            elseif (itemA:GetName() = "me" and itemB:GetName() = "Platform9")
+                Vector2 linearVelocity
+                linearVelocity:Set(-120,0)
+                Block:SetLinearVelocity(linearVelocity)
+           end
+    end
+
+    action Update(number seconds)
+        currentx = Block:GetGlobalX()
+        currenty = Block:GetGlobalY()
+        if monitor:IsKeyPressed(keys:ESCAPE)
+            Exit()
+        end
+        if monitor:IsKeyPressed(keys:D)
+            Move(keys:D)
+        end
+        if monitor:IsKeyPressed(keys:A)
+            Move(keys:A)
+        end
+    end
+    
+    action Move(integer press)
+        if press = keys:D
+            Block:SetPosition(currentx+speed,currenty)
+        end
+        if press = keys:A
+            Block:SetPosition(currentx-speed,currenty)
+        end
+    end
+end
